@@ -1,0 +1,46 @@
+import os
+import telebot
+token = "861517106:AAEJaQWIMl4Ky6dGAYVXMS3W-D7aOGYDBCk"
+
+bot = telebot.TeleBot(token)
+
+bot = telebot.TeleBot("861517106:AAEJaQWIMl4Ky6dGAYVXMS3W-D7aOGYDBCk")
+
+
+@bot.message_handler(commands=["start"])
+def handler_start(message):
+  user_markup = telebot.types.ReplyKeyboardMarkup(True, False)
+  user_markup.row("/start", "/stop")
+  user_markup.row("photo")
+  user_markup.row("Стикери")
+  user_markup.row("локация")
+  user_markup.row("text")
+  user_markup.row("документи")
+  bot.send_message(message.from_user.id, "Ласкаво просимо",
+                   reply_markup=user_markup)
+
+
+@bot.message_handler(content_types=["text"])
+def hsndler_text(message):
+     if message.text == "локация":
+        bot.send_chat_action(message.from_user.id, "find_location")
+        bot.send_location(message.from_user.id, 50.928030, 25.309285)
+
+@bot.message_handler(commands=["stop"])
+def handler_stop(message):
+       user_markup = telebot.types.ReplyKeyboardMarkup(True, False)
+       if message.text == "а":
+            bot.send_message(message.from_user.id, "Б")
+       elif message.text == "В":
+            bot.send_message(message.from_user.id, "В")
+       else: 
+            bot.send_message(message.from_user.id, "ТИ граэш не правильно")
+ 
+          
+
+
+bot.polling(none_stop=True)
+
+
+  #content_types
+
